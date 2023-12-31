@@ -1,0 +1,88 @@
+CREATE TABLE `user`
+(
+ `id`         int NOT NULL AUTO_INCREMENT COMMENT 'user 고유 ID' ,
+ `userId`     int NOT NULL COMMENT '사용자 ID' ,
+ `passWord`   varbinary(45) NOT NULL COMMENT '사용자 비밀번호' ,
+ `nickName`   varchar(45) NOT NULL COMMENT '사용자 별명' ,
+ `isAdmin`    tinyint NOT NULL COMMENT '관리자 권한 유무' ,
+ `createTime` datetime NOT NULL COMMENT '생성일자' ,
+ `isWithDraw` tinyint NOT NULL ,
+
+PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `category`
+(
+ `id`   int NOT NULL AUTO_INCREMENT COMMENT '카테고리 ID' ,
+ `name` varchar(45) NOT NULL COMMENT '카테고리 명' ,
+
+PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `post`
+(
+ `id`         int NOT NULL AUTO_INCREMENT COMMENT 'post ID' ,
+ `name`       varchar(45) NOT NULL COMMENT '게시글 제목' ,
+ `isAdmin`    tinyint NOT NULL COMMENT '관리자 권한 유무' ,
+ `contents`   varchar(500) NOT NULL COMMENT '게시글 내용' ,
+ `createTime` datetime NOT NULL COMMENT '게시글 등록 시간' ,
+ `views`      int NOT NULL COMMENT '게시글 조회수' ,
+ `categoryId` int NOT NULL ,
+ `userId`     int NOT NULL ,
+
+PRIMARY KEY (`id`),
+KEY `FK_1` (`userId`),
+CONSTRAINT `FK_1` FOREIGN KEY `FK_1` (`userId`) REFERENCES `user` (`id`),
+KEY `FK_2` (`categoryId`),
+CONSTRAINT `FK_2` FOREIGN KEY `FK_2` (`categoryId`) REFERENCES `category` (`id`)
+);
+
+CREATE TABLE `file`
+(
+ `id`        int NOT NULL COMMENT '파일 ID' ,
+ `path`      varchar(100) NOT NULL COMMENT '파일 경로' ,
+ `name`      varchar(45) NOT NULL COMMENT '파일 명' ,
+ `extension` varchar(45) NOT NULL COMMENT '파일 확장자' ,
+ `postId`    int NOT NULL COMMENT '게시글 ID' ,
+
+PRIMARY KEY (`id`),
+KEY `FK_1` (`postId`),
+CONSTRAINT `FK_3` FOREIGN KEY `FK_1` (`postId`) REFERENCES `post` (`id`)
+);
+
+CREATE TABLE `tag`
+(
+ `id`   int NOT NULL COMMENT '태그 ID' ,
+ `name` varchar(45) NOT NULL COMMENT '태그 명' ,
+ `url`  varchar(45) NOT NULL COMMENT '태그 URL' ,
+
+PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `post_tag`
+(
+ `id`     int NOT NULL AUTO_INCREMENT COMMENT '게시글 태그 ID' ,
+ `postId` int NOT NULL COMMENT '게시글 ID' ,
+ `tagId`  int NOT NULL COMMENT '태그 ID' ,
+
+PRIMARY KEY (`id`),
+KEY `FK_1` (`postId`),
+CONSTRAINT `FK_4` FOREIGN KEY `FK_1` (`postId`) REFERENCES `post` (`id`),
+KEY `FK_2` (`tagId`),
+CONSTRAINT `FK_5` FOREIGN KEY `FK_2` (`tagId`) REFERENCES `tag` (`id`)
+);
+
+CREATE TABLE `comment`
+(
+ `id`           int NOT NULL ,
+ `postId`       int NOT NULL COMMENT 'post ID' ,
+ `contents`     varchar(300) NOT NULL ,
+ `subCommentId` int NOT NULL ,
+
+PRIMARY KEY (`id`),
+KEY `FK_1` (`postId`),
+CONSTRAINT `FK_6` FOREIGN KEY `FK_1` (`postId`) REFERENCES `post` (`id`),
+KEY `FK_2` (`subCommentId`),
+CONSTRAINT `FK_7` FOREIGN KEY `FK_2` (`subCommentId`) REFERENCES `comment` (`id`)
+);
+

@@ -7,13 +7,14 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration 
+@Configuration
 public class DatabaseConfig {
-	
-	@ConfigurationProperties(prefix = "spring.datasource") 
-	@Bean 
-	public DataSource dataSource(){
-		return DataSourceBuilder.create().build();
-	}
+
+    @ConfigurationProperties(prefix = "spring.datasource")
+    @Bean
+    public DataSource dataSource(){
+        return DataSourceBuilder.create().build();
+    }
+
 
 }
