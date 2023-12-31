@@ -13,7 +13,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class UserController {
 	
-	@Autowired
+	@Autowired 
 	private final UserServiceImpl userService;
 	
 	public UserController(UserServiceImpl userService) {

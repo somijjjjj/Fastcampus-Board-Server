@@ -6,15 +6,16 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
+@Getter 
 @Setter
-@ToString
+@ToString 
 public class UserDTO {
 	
 	public enum Status{
 		DEFAULT, ADMIN, DELETED
 	}
-
+	
+	//user 테이블 속성
 	private int id;
 	private String userId;
 	private String password;
@@ -24,5 +25,4 @@ public class UserDTO {
 	private boolean isWithDraw;
 	private Status status;
 	private Date updateTime;
-	
 }
